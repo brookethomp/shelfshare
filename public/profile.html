@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelfShare - Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F4E1C1;
+            color: #4C4C4C;
+        }
+
+        header {
+            background-color: #3A7CA5;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #A8C4A0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-container h2 {
+            margin-bottom: 20px;
+            color: #4C4C4C;
+        }
+
+        .profile-container p {
+            margin-bottom: 15px;
+            color: #4C4C4C;
+        }
+
+        .profile-container img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .profile-container input[type="file"],
+        .profile-container input[type="text"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #D57A6E;
+            border-radius: 4px;
+        }
+
+        .profile-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #D57A6E;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .profile-container button:hover {
+            background-color: #A84C40;
+        }
+
+        #logoutBtn {
+            margin-top: 15px;
+            background-color: #3A7CA5;
+        }
+
+        #logoutBtn:hover {
+            background-color: #2A5E80;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px 0;
+            background-color: #3A7CA5;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Profile</h1>
+    </header>
+    <div class="profile-container" id="profileContainer"></div>
+    <div class="profile-container">
+        <input type="file" id="profileImageInput" accept="image/*">
+        <input type="text" id="descriptionInput" placeholder="Enter a brief description about yourself">
+        <button id="saveProfileBtn">Save Profile</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = "login.html";
+    
+            const response = await fetch('https://shelfshare-final.herokuapp.com/profile', {
+                headers: { 'Authorization': token }
+            });
+    
+            const data = await response.json();
+            if (data.status === "success") {
+                document.getElementById("profileContainer").innerHTML = `
+                    <h2>Welcome, ${data.user.name}</h2>
+                    <img id="profileImage" src="${data.user.profileImage || ''}" alt="Profile Image">
+                    <p id="descriptionText">${data.user.description || 'No description provided'}</p>
+                    <button id="logoutBtn">Logout</button>
+                `;
+    
+                document.getElementById("logoutBtn").addEventListener("click", () => {
+                    localStorage.removeItem('token');
+                    window.location.href = "login.html";
+                });
+            } else {
+                alert(data.message);
+                window.location.href = "login.html";
+            }
+        });
+
+        document.getElementById("saveProfileBtn").addEventListener("click", async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = "login.html";
+    
+            const fileInput = document.getElementById('profileImageInput');
+            const description = document.getElementById('descriptionInput').value;
+    
+            const formData = new FormData();
+            if (fileInput.files[0]) {
+                formData.append('profileImage', fileInput.files[0]);
+            }
+            formData.append('description', description);
+    
+            try {
+                const response = await fetch('https://shelfshare-final.herokuapp.com/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': token
+                    },
+                    body: formData
+                });
+    
+                const data = await response.json();
+                if (data.status === "success") {
+                    alert('Profile updated successfully');
+                    window.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                console.error('Error updating profile:', err);
+                alert('An error occurred while updating your profile. Please try again later.');
+            }
+        });
+    </script>    
+    <footer>
+        <p>&copy; 2024 ShelfShare. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelfShare - Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F4E1C1;
+            color: #4C4C4C;
+        }
+
+        header {
+            background-color: #3A7CA5;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #A8C4A0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4C4C4C;
+        }
+
+        .login-container label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            color: #4C4C4C;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #D57A6E;
+            border-radius: 4px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #D57A6E;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #A84C40;
+        }
+
+        .register-btn {
+            margin-top: 10px;
+            background-color: #3A7CA5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .register-btn:hover {
+            background-color: #2A5E80;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px 0;
+            background-color: #3A7CA5;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to ShelfShare</h1>
+    </header>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <div id="message"></div>
+        <form id="loginForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <button class="register-btn" onclick="window.location.href='register.html'">Register</button>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async (event) => {
+            event.preventDefault(); // Prevent form from submitting the default way
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.status === "success") {
+                    // Store the JWT token and redirect to profile
+                    localStorage.setItem('token', data.token);
+                    window.location.href = "/profile.html";
+                } else {
+                    // Show error message if login failed
+                    document.getElementById("message").innerText = data.message;
+                    document.getElementById("message").style.color = "#D57A6E";
+                }
+            } catch (err) {
+                console.error('Error during login:', err);
+                document.getElementById("message").innerText = "An error occurred. Please try again later.";
+                document.getElementById("message").style.color = "#D57A6E";
+            }
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2024 ShelfShare. All rights reserved.</p>
+    </footer>
+</body>
+</html>
