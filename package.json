@@ -12,6 +12,7 @@
       "url": "https://shelfshare-final-8210127f7e19.herokuapp.com/"
     },
     "dependencies": {
+        "multer": "^1.4.5", 
         "cors": "^2.8.5",
       "bcrypt": "^5.0.1",
       "dotenv": "^16.0.0",
