@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="navbar">
                     <ul>
                         <li>
-                            <form action="https://echenjones.github.io/shelfshare/find.html" id="search"> <!-- May change page name -->
+                            <form action="https://brookethomp.github.io/shelfshare/find.html" id="search"> <!-- May change page name -->
                                 <input type="text" placeholder="Search books" name="search">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
@@ -22,14 +22,14 @@ document.addEventListener("DOMContentLoaded", function() {
             <!-- Navigation bar -->
             <div class="header">
                 <div style="min-width: 10px;"></div>
-                <a href="https://echenjones.github.io/shelfshare"><img src="logo.png" alt="Logo"></a>
+                <a href="https://brookethomp.github.io/shelfshare"><img src="logo.png" alt="Logo"></a>
                 <div></div>
                 <div class="navbar">
                     <ul>
-                        <li><a href="https://echenjones.github.io/shelfshare/about.html">About</a></li>
-                        <li><a href="https://echenjones.github.io/shelfshare/map.html">SwapSpots</a></li>
+                        <li><a href="https://brookethomp.github.io/shelfshare/about.html">About</a></li>
+                        <li><a href="https://brookethomp.github.io/shelfshare/map.html">SwapSpots</a></li>
                         <li><a href="#">FAQ</a></li>
-                        <li><a href="https://echenjones.github.io/shelfshare/contact.html">Contact</a></li>
+                        <li><a href="https://brookethomp.github.io/shelfshare/contact.html">Contact</a></li>
                     </ul>
                 </div>
                 <div class="hamburger"> <!-- Hamburger menu -->
@@ -42,17 +42,17 @@ document.addEventListener("DOMContentLoaded", function() {
             
             <!-- Expandable menu -->
             <div class="menu" id="menu">
-                <a href="https://echenjones.github.io/shelfshare/about.html">About</a>
+                <a href="https://brookethomp.github.io/shelfshare/about.html">About</a>
                 <br>
-                <a href="https://echenjones.github.io/shelfshare/map.html">SwapSpots</a>
+                <a href="https://brookethomp.github.io/shelfshare/map.html">SwapSpots</a>
                 <br>
                 <a href="#">FAQ</a>
                 <br>
-                <a href="https://echenjones.github.io/shelfshare/contact.html">Contact</a>
+                <a href="https://brookethomp.github.io/shelfshare/contact.html">Contact</a>
                 <br>
-                <a href="https://echenjones.github.io/shelfshare/subscription.html">Subscriptions</a>
+                <a href="https://brookethomp.github.io/shelfshare/subscription.html">Subscriptions</a>
                 <br>
-                <a href="https://echenjones.github.io/shelfshare/profile.html">My Profile</a>
+                <a href="https://brookethomp.github.io/shelfshare/profile.html">My Profile</a>
                 <br>
                 <a href="#">Log In</a>
                 <br>
