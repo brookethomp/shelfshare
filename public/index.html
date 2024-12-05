@@ -1,54 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="ShelfShare is a community-based platform that allows local book lovers to easily exchange books with each other through a flexible subscription model, promoting affordable reading and sustainability.">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelfShare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
 
-        <title>ShelfShare</title>
-        <link rel="icon" type="image/x-icon" href="icon.png">
-        <link rel="stylesheet" href="style.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- For hamburger and social media icons -->
-        <style type="text/css">
-            .content {
-                padding: 20px 20% 50px 20%;
-                text-align: justify;
-                line-height: 2;
-            }
-            .content h1 {
-                padding-top: 20px;
-                padding-bottom: 20px;
-                text-align: center;
-                line-height: 1.2;
-            }
+        header {
+            background-color: #0073e6;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
 
-            @media (max-width: 600px) {
-                .content {
-                    padding: 20px 50px 20px 50px;
-                }
-            }
-        </style>
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-        <!-- Header -->
-        <script src="header.js"></script>
-    </head>
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-container label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #005bb5;
+        }
+
+        .register-btn {
+            margin-top: 10px;
+            background-color: #28a745;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px 0;
+            background-color: #0073e6;
+            color: white;
+        }
+    </style>
+</head>
 <body>
     <header>
         <h1>Welcome to ShelfShare</h1>
     </header>
-    <div class="blank-space"></div>
+
     <div class="login-container">
         <h2>Login</h2>
-        <form id="loginForm">
+        <form method="POST" action="login.php">
             <label for="email">Email:</label>
-            <input type="email" id="email" required>
+            <input type="email" name="email" id="email" required>
             <label for="password">Password:</label>
-            <input type="password" id="password" required>
+            <input type="password" name="password" id="password" required>
             <button type="submit">Login</button>
         </form>
         <button class="register-btn" onclick="window.location.href='register.html'">Register</button>
     </div>
-    <footer class="footer">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                if (confirm("You are already logged in. Would you like to go to your profile page?")) {
+                    window.location.href = "profile.html";
+                }
+            }
+        });
+        
+    </script>
+
+    <footer>
         <p>&copy; 2024 ShelfShare. All rights reserved.</p>
     </footer>
 </body>
