@@ -2,44 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="View your ShelfShare profile.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
+
+    <title>ShelfShare | Profile</title>
+    <link rel="icon" type="image/x-icon" href="icon.png">
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Header -->
+    <script src="header.js"></script>
 </head>
 <body>
-    <div class="top">
-        <script src="header.js"></script>
-    </div>
-    <div class="blank-space"></div>
-    <div class="profile-container">
+    <!-- Profile Image -->
+    <img style="margin: 20px auto; display: block; width: 30%; max-width: 300px; border-radius: 50%;" 
+         src="default-profile.jpg" alt="Profile Photo" id="profileImage">
+
+    <div style="max-width: 900px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
         <h1>Your Profile</h1>
-        <img id="profileImage" src="default-profile.jpg" alt="Profile Image" style="width: 150px; height: 150px;">
-        <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
-        <p><strong>Bio:</strong> <span id="profileBio">Loading...</span></p>
-        <p><strong>Favorite Genres:</strong> <span id="profileGenres">Loading...</span></p>
-        <p><strong>Favorite Books:</strong> <span id="profileBooks">Loading...</span></p>
-        <button onclick="window.location.href='edit-profile.html'">Edit Profile</button>
+        <div id="profileDetails">
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>About You:</strong> I love reading fantasy and historical fiction.</p>
+            <p><strong>Favorite Genres:</strong> Fantasy, Historical Fiction, Mystery</p>
+            <p><strong>Top 3 Favorite Books:</strong></p>
+            <ul>
+                <li>The Hobbit</li>
+                <li>Pride and Prejudice</li>
+                <li>To Kill a Mockingbird</li>
+            </ul>
+        </div>
+        <!-- Edit Profile Button -->
+        <a href="edit-profile.html" style="display: block; margin: 20px auto; width: 150px; text-align: center; 
+        padding: 10px; background-color: #3A7CA5; color: white; text-decoration: none; border-radius: 5px;">
+            Edit Profile
+        </a>
     </div>
-    <div class="footer">
-        <script src="footer.js"></script>
-    </div>
-    <script>
-        async function loadProfile() {
-            try {
-                const response = await fetch('/profile', {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                });
-                const user = await response.json();
-                document.getElementById('profileName').textContent = user.name || 'Name not set';
-                document.getElementById('profileBio').textContent = user.bio || 'No bio available.';
-                document.getElementById('profileGenres').textContent = user.genres?.join(', ') || 'No genres selected.';
-                document.getElementById('profileBooks').textContent = user.favoriteBooks?.join(', ') || 'No favorite books listed.';
-                document.getElementById('profileImage').src = user.profilePhoto || 'default-profile.jpg';
-            } catch (err) {
-                console.error('Error loading profile:', err);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', loadProfile);
-    </script>
+
+    <!-- Footer -->
+    <script src="footer.js"></script>
 </body>
 </html>
