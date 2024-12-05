@@ -17,16 +17,17 @@ console.log('JWT_SECRET:', process.env.JWT_SECRET);
 // Middleware to parse JSON
 app.use(express.json());
 
-// Define CORS options
-const corsOptions = {
-    origin: ['http://localhost:4000', 'https://shelfshare-final.herokuapp.com'], // Allowed origins
+// Allow all origins
+app.use(cors({
+    origin: '*', // Allow all origins
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-    credentials: true // Allow credentials (e.g., cookies)
-};
+    credentials: false, // Disable credentials if not required
+}));
 
-// Use CORS middleware
-app.use(cors(corsOptions));
+// Enable preflight requests for all routes
+app.options('*', cors());
+
 
 // Debug preflight requests
 app.options('*', (req, res) => {
@@ -57,18 +58,12 @@ const User = mongoose.model('User', userSchema);
 
 // Middleware to authenticate the token
 const authenticate = (req, res, next) => {
-    const token = req.header('Authorization');
-    if (!token) {
-        return res.status(401).json({ status: 'error', message: 'No token provided' });
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
-        next();
-    } catch (err) {
-        res.status(401).json({ status: 'error', message: 'Invalid token' });
-    }
+    // Comment this out to disable authentication for testing
+    // const token = req.header('Authorization');
+    // if (!token) {
+    //     return res.status(401).json({ status: 'error', message: 'No token provided' });
+    // }
+    next();
 };
 
 // Login Endpoint
