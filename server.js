@@ -58,12 +58,18 @@ const User = mongoose.model('User', userSchema);
 
 // Middleware to authenticate the token
 const authenticate = (req, res, next) => {
-    // Comment this out to disable authentication for testing
-    // const token = req.header('Authorization');
-    // if (!token) {
-    //     return res.status(401).json({ status: 'error', message: 'No token provided' });
-    // }
-    next();
+    const token = req.header('Authorization');
+    if (!token) {
+        return res.status(401).json({ status: 'error', message: 'No token provided' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (err) {
+        res.status(401).json({ status: 'error', message: 'Invalid token' });
+    }
 };
 
 // Login Endpoint
